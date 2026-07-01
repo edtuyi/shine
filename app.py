@@ -14,33 +14,18 @@ import string
 import sys
 import os
 import csv
+import hashlib
 import threading
-from concurrent.futures import ThreadPoolExecutor, TimeoutError as FuturesTimeoutError
+from concurrent.futures import ThreadPoolExecutor, TimeoutError as FuturesTimeoutError, as_completed
 from urllib.parse import urlparse, parse_qs, urlencode
 from datetime import datetime
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import logging
 
-# Install missing packages
-try:
-    import requests
-except ImportError:
-    os.system('pip install requests')
-    import requests
-
-try:
-    from playwright.sync_api import sync_playwright
-except ImportError:
-    os.system('pip install playwright')
-    os.system('playwright install chromium')
-    from playwright.sync_api import sync_playwright
-
-try:
-    from bs4 import BeautifulSoup
-except ImportError:
-    os.system('pip install beautifulsoup4')
-    from bs4 import BeautifulSoup
+import requests
+from playwright.sync_api import sync_playwright
+from bs4 import BeautifulSoup
 
 
 app = Flask(__name__)
